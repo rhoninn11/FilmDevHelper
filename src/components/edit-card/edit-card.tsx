@@ -8,6 +8,7 @@ import {
     InputGroup,
 } from '@blueprintjs/core';
 import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
+import { DevStepEditor } from '../dev-step-editor/dev-step-editor';
 
 import classNames from 'classnames';
 import styles from './edit-card.module.scss';
@@ -18,6 +19,7 @@ import { useState, useEffect } from 'react';
 import { editDBFilm, getAllDBDevSteps, addDBDevStep } from '../../logic/db';
 
 import { DevStep } from '../../logic/data-props';
+import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
 
 const logo =
     'https://static.wixstatic.com/shapes/610b66_1b7705fd82034afaafdedcc636d8079f.svg'; // bp-logo.svg (256x298)
@@ -64,42 +66,21 @@ export const EditCard = ({
         fetchData();
     }, []);
 
-    const nameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const enteredName = event.target.value;
-        setFilmName(enteredName)
-    };
-
-    const descInputHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        console.log(event.target.value)
-        const enteredDesc = event.target.value;
-        setFilmDesc(enteredDesc);
-    };
-
-    const devStepsDBSync = async () => {
-        const newSteps = devSteps.filter((step) => !step.exists);
-        const existingSteps = devSteps.filter((step) => step.exists);
-
-        for (const step of newSteps) {
-            await addDBDevStep(step.devStep);
-        }
-    }
-
     const acceptChanges = async () => {
         const filmAfterEdit = film
         filmAfterEdit.name = filmName
         filmAfterEdit.description = filmDesc
 
         await editDBFilm(filmAfterEdit.id, filmAfterEdit)
-        await devStepsDBSync();
         if (onCancel) onCancel()
     }
 
     const newStep = () => {
-        const newDevStep: _DevStep = {
+        const new_DevStep: _DevStep = {
             devStep: {
                 id: totalDevSteps + devSteps.length + 1,
-                title: "new step",
-                content: "new step description",
+                title: "Step Title",
+                content: "Informations about development step",
                 filmId: film.id,
                 timer: false,
                 timerLength_s: 0,
@@ -107,12 +88,13 @@ export const EditCard = ({
             exists: false,
         }
 
-        return newDevStep;
+        return new_DevStep;
     }
     
-    const addStep = () => {
-        const newDevStep = newStep();
-        setDevSteps((prevDevSteps) => [...prevDevSteps, newDevStep]);
+    const addStep = async () => {
+        const new_DevStep = newStep();
+        await addDBDevStep(new_DevStep.devStep);
+        setDevSteps((prevDevSteps) => [...prevDevSteps, new_DevStep]);
     }
 
     return (
@@ -124,10 +106,12 @@ export const EditCard = ({
                 <H1>{formTitle}</H1>
             </div>
             <img className={styles.logo} src={logo} alt="" />
-            <InputGroup fill round placeholder="Film Name" value={filmName} onChange={nameInputHandler}/>
-            <TextArea value={filmDesc} onChange={descInputHandler}/>
+            <InputGroup value={filmName} onChange={(ev) => inputEditor(ev, setFilmName)}
+                placeholder="Film Name" fill round />
+            <TextArea value={filmDesc} onChange={(ev) => textAreaEditor(ev, setFilmDesc)}
+                />
             {devSteps.map((step) => (
-                <span key={step.devStep.id}>{step.devStep.title}</span>
+                <DevStepEditor key={step.devStep.id} devStep={step.devStep}/>
             ))}
             <TooltipedButton icon="add" tipText='Add next step' onClick={addStep}/>
                 <Button

@@ -90,16 +90,13 @@ export let addDBFilm = async (newFilm: Film) => {
 }
 
 export let editDBFilm = async (id: number, updatedFilm: Film) => {
-    console.log("in editDBItem")
     const db = await getDB();
     const tx = db.transaction(FILM_FIELD, 'readwrite');
     const store = tx.objectStore(FILM_FIELD);
     const film = await store.get(id);
     if (film) {
-        console.log("in if")
         await store.put(updatedFilm);
     }
-    console.log("out if")
 }
 
 export let getAllDBFilms = async () => {
@@ -113,6 +110,16 @@ export let addDBDevStep = async (newDevStep: DevStep) => {
     const tx = db.transaction(DEV_STEP_FIELD, 'readwrite');
     const store = tx.objectStore(DEV_STEP_FIELD);
     await store.add(newDevStep);
+}
+
+export let editDBDevStep = async (id: number, updatedDevStep: DevStep) => {
+    const db = await getDB();
+    const tx = db.transaction(DEV_STEP_FIELD, 'readwrite');
+    const store = tx.objectStore(DEV_STEP_FIELD);
+    const devStep = await store.get(id);
+    if (devStep) {
+        await store.put(updatedDevStep);
+    }
 }
 
 export let getAllDBDevSteps = async () => {
