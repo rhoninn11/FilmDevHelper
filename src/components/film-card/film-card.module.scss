@@ -1,0 +1,56 @@
+// globals
+@import '../../globals/colors.module.scss';
+
+// Styles
+.wrapper {
+    display: grid;
+    gap: 1.75rem;
+    padding: 2rem;
+    max-width: 600px;
+}
+
+.last_item {
+    margin-left: auto;
+}
+
+.card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    border-radius: 22px;
+    min-width: 420px;
+    position: static;
+    top: 0px;
+}
+
+.in_progress {
+    background-color: #9f1a1a;
+}
+
+.title {
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    color: $coffee-brown;
+    margin: 0;
+
+    &.sub {
+        font-family: sans-serif;
+        color: $deep-blue-50;
+    }
+}
+
+.btn {
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.logo {
+    height: 7rem;
+}
+
+.btn_wrapper {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: start;
+}

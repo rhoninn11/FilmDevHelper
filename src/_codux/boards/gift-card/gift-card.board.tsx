@@ -6,7 +6,7 @@ export default createBoard({
     name: 'Gift Card',
     Board: () => (
         <div className={styles.grid2col}>
-            <GiftCard />
+            <GiftCard full={true} />
             <GiftCard full />
         </div>
     ),

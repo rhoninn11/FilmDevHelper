@@ -3,7 +3,7 @@ import { MiniCards } from '../../../components/mini-cards/mini-cards';
 
 export default createBoard({
     name: 'Mini Cards',
-    Board: () => <MiniCards />,
+    Board: () => <MiniCards>{null}</MiniCards>,
     environmentProps: {
         canvasWidth: 600,
         windowHeight: 800,

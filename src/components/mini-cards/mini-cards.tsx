@@ -70,10 +70,11 @@ export const MiniCards = ({
                         Enable Communication Limits
                     </H3>
                     <p className={`${styles.title} ${styles.sub}`}>
-                        Limits apply to Phone, FaceTime, Messages and iCloud
-                        contacts.{' '}
+                        {' '}
+                        Messages and iCloudcontacts.{' '}
                     </p>
                 </div>
+                <Button className={styles.btn} intent={intent} icon="cross" />
             </Card>
             <Card className={styles.card} elevation={Elevation.THREE}>
                 <Spinner intent={intent} size={33} />
@@ -82,7 +83,7 @@ export const MiniCards = ({
                     Software Update Installation...
                 </H3>
             </Card>
-            <Card className={styles.card} elevation={Elevation.THREE}>
+            <Card className={styles.card} elevation={3}>
                 <ProgressBar animate={false} intent={intent} value={0.65} />
                 <span />
                 <Button className={styles.btn} intent={intent} icon="cross" />

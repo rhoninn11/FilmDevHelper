@@ -32,6 +32,8 @@ export const ProductItem = ({
     isFavorite = false,
     children,
 }: ProductItemProps) => {
+    // templated string
+    console.log(`itemPrice: ${itemPrice}`);
     return (
         <Card
             className={classNames(styles.product_wrapper, className)}
