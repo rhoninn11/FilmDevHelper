@@ -1,6 +1,12 @@
-.root {
-    max-width: 350px;
-    min-height: 100%;
-    padding: 2rem;
-    gap: 1rem;
+.rows{
+    display: flex;
+    flex-direction: column;
+// make space beatweane child items
+    gap: 10px;
+    min-width: 100%;
+}
+
+.custom_padding{
+    padding: 20px;
+    padding-top: 16px;
 }

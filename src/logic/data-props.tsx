@@ -45,7 +45,7 @@ const sample_step_1: DevStep = {
     title: "Sample Step 1",
     content: "This is a sample step",
     timer: false,
-    timerLength_s: 16,
+    timerLength_s: 2,
     deleted: false,
     temp: 21,
 }
@@ -56,7 +56,7 @@ const sample_step_2: DevStep = {
     title: "Sample Step 2",
     content: "This is a sample step",
     timer: false,
-    timerLength_s: 14,
+    timerLength_s: 2,
     deleted: false,
     temp: 21,
 }
@@ -67,7 +67,7 @@ const sample_step_3: DevStep = {
     title: "Sample Step 3",
     content: "This is a sample step",
     timer: false,
-    timerLength_s: 23,
+    timerLength_s: 2,
     deleted: false,
     temp: 21,
 }
@@ -78,7 +78,7 @@ const sample_step_4: DevStep = {
     title: "Sample Step 4",
     content: "This is a sample step",
     timer: false,
-    timerLength_s: 66,
+    timerLength_s: 2,
     deleted: false,
     temp: 21,
 }
@@ -86,5 +86,5 @@ const sample_step_4: DevStep = {
 export const sample_recipe: DevRecipe = {
     filmToDevelop: sample_film,
     allSteps: [sample_step_1, sample_step_2, sample_step_3, sample_step_4],
-    firstStep: sample_step_2
+    firstStep: sample_step_1
 }

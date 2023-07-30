@@ -12,7 +12,9 @@ export const TimeDisplay = ({
 }: TimeDisplayProps) => {
 
     const sampleValue = time_s;
+    // trim to 2 decimal places
     let sec = sampleValue % 60
+    let sec_txt = `${sec.toFixed(2)}`
     let min = (Math.floor(sampleValue / 60))
 
     return (
@@ -20,7 +22,7 @@ export const TimeDisplay = ({
             <div className={styles.frow}>
                 <span>{min} min </span>
                 <span>:</span>
-                <span>{sec} sec </span>
+                <span>{sec_txt} sec </span>
             </div>
         </div>
     );

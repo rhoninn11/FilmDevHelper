@@ -16,13 +16,11 @@ interface EditCommProps {
     onEditAccept: (film: Film) => void;
 }
 
-let recipe = sample_recipe
-
 function App() {
     const [filmForEdit, setFilmForEdit] = useState<Film | null>(null);
     const [filmForDevelopment, setFilmForDevelopment] = useState<Film | null>(null);
     // const [develRecipe, setDevelRecipe] = useState<DevRecipe| null>(null);
-    const [develRecipe, setDevelRecipe] = useState<DevRecipe| null>(recipe);
+    const [develRecipe, setDevelRecipe] = useState<DevRecipe| null>(null);
     const [runTimer, setRunTimer] = useState<boolean>(false);
 
     const TopView = <Top_view
@@ -42,17 +40,24 @@ function App() {
             onDevelop={(recipe) => setDevelRecipe(recipe)}/>
         : null;
 
-    const RecipeView = !runTimer && develRecipe ?
+    const close_overlay = () => {
+        setDevelRecipe(null);
+        setRunTimer(false);
+    }
+
+    const overlay = !runTimer && develRecipe ?
         <RecipeOverlay
             recipe={develRecipe}
-            onClose={() => setDevelRecipe(null)}
+            onClose={close_overlay}
             onStart={() => setRunTimer(true)}/>
         : null;
 
     const ProcessView = runTimer && develRecipe ? 
         <ProcessCard 
             recipe={develRecipe}
-            onClose={() => setRunTimer(false)}/>
+            onSoftClose={() => setRunTimer(false)}
+            onHardClose={close_overlay}/>
+            
         : null;
 
     const AlternativeView = EditView || DevelopView || ProcessView;
@@ -60,7 +65,7 @@ function App() {
 
     return (
         <div className={classNames(styles.App, styles.dark, Classes.DARK) }>
-            {RecipeView}
+            {overlay}
             {Wrapped ? Wrapped : TopView }
         </div>
     );
