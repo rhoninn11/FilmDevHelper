@@ -1,0 +1,127 @@
+{
+  "films": [
+    {
+      "id": 1,
+      "name": "Fujifilm3000x_2",
+      "description": "Ludzie go uwielbiają - wymyślony nie wiem czy taki jest",
+      "deleted": false
+    },
+    {
+      "id": 2,
+      "name": "Generic Nikon Film",
+      "description": "Niby spoko ale to Nikon",
+      "deleted": false
+    },
+    {
+      "id": 3,
+      "name": "SonyXG2",
+      "description": "Wymyśliłem sobie taką nazwę, żeby zobaczyć czy edycja działa:D",
+      "deleted": false
+    },
+    {
+      "id": 4,
+      "name": "SampleFilm_2",
+      "description": "Generic description 2",
+      "deleted": false
+    },
+    {
+      "id": 5,
+      "name": "SampleFilm_3",
+      "description": "Generic description 3",
+      "deleted": false
+    }
+  ],
+  "devSteps": [
+    {
+      "id": 1,
+      "title": "Naświetlanie kliszy",
+      "content": "To pierwszy krok w procesie, który ma miejsce w aparacie fotograficznym. Klisza jest naświetlana przez otwór w aparacie (zwany migawką), który pozwala na dostęp światła do kliszy. Czas i intensywność naświetlenia determinuje, jak wygląda końcowy obraz.",
+      "filmId": 1,
+      "timer": true,
+      "timerLength_s": 3599,
+      "deleted": false,
+      "temp": 12
+    },
+    {
+      "id": 2,
+      "title": "Rozwój kliszy",
+      "content": "Po naświetleniu kliszy, następnym krokiem jest jej rozwinięcie. Klisza jest zanurzana w roztworze zwanej wywoływaczem, który przekształca naświetlone ziarna srebra na kliszy w metaliczne srebro, tworząc negatyw obrazu. Niezakłócone ziarna srebra pozostają nienaświetlone.",
+      "filmId": 1,
+      "timer": true,
+      "timerLength_s": 70,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 3,
+      "title": "Wyrzucić",
+      "content": "prosto do śmieci",
+      "filmId": 2,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 4,
+      "title": "Zatrzymanie wywoływania",
+      "content": "Kiedy klisza jest odpowiednio rozwinięta, następnym krokiem jest zatrzymanie procesu wywoływania. Klisza jest zanurzana w kąpieli zatrzymującej, która neutralizuje wywoływacz i zapobiega dalszemu rozwijaniu obrazu",
+      "filmId": 1,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 5,
+      "title": "Utlenianie kliszy",
+      "content": "Po zatrzymaniu wywoływania, klisza jest zanurzana w utrwalaczu. Utrwalacz usuwa niezakłócone i nieprzekształcone ziarna srebra, zapobiegając dalszym zmianom w obrazie pod wpływem światła",
+      "filmId": 1,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 6,
+      "title": "Płukanie",
+      "content": "Następnie klisza jest dokładnie płukana wodą, aby usunąć wszelkie resztki chemikaliów.",
+      "filmId": 1,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 7,
+      "title": "Suszenie kliszy",
+      "content": "Ostatnim krokiem jest wysuszenie kliszy. Po wysuszeniu klisza jest gotowa do wykonania odbitek",
+      "filmId": 1,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 8,
+      "title": "Wywoływanie odbitek",
+      "content": "Z naświetlonej i rozwiniętej kliszy można teraz wykonać odbitki. Negatyw jest naświetlany na papier fotograficzny, który jest następnie zanurzany w wywoływaczu, kąpieli zatrzymującej, utrwalaczu, płukany i suszony, podobnie jak klisza",
+      "filmId": 1,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    },
+    {
+      "id": 9,
+      "title": "Noooo to takie testowe xD",
+      "content": "A tu nic konkretenego nie mam do testu",
+      "filmId": 3,
+      "timer": false,
+      "timerLength_s": 0,
+      "deleted": false,
+      "temp": 0
+    }
+  ],
+  "devStepNotes": []
+}
