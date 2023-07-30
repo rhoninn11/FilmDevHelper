@@ -1,4 +1,6 @@
-import { Card, Button } from '@blueprintjs/core';
+import { Card, Button, H3 } from '@blueprintjs/core';
+import { Classes } from '@blueprintjs/core';
+import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
 
 import { Film } from '../../logic/data-props';
 
@@ -9,6 +11,7 @@ export interface FilmCardProps {
     className?: string;
     film: Film;
     filmEditHandler: (film: Film) => void;
+    filmDevelopHandle: (film: Film) => void;
 }
 
 const logo =
@@ -18,29 +21,27 @@ export const FilmCard = ({
     className,
     film,
     filmEditHandler,
+    filmDevelopHandle,
 }: FilmCardProps) => {
     return (
         <Card className={classNames(className, styles.wrapper)}>
             <Card elevation={3} className={styles.card}>
                 <img className={styles.logo} src={logo} alt="" />
                 <div>
-                    <h3 className={styles.title}>{film.name}</h3>
-                    <p className={classNames(styles.title, styles.sub)}>
-                        {film.description}
-                    </p>
+                    <H3 className={styles.title}>{film.name}</H3>
+                    <p>{film.description}</p>
                 </div>
                 <div
                     className={classNames(styles.btn_wrapper, styles.last_item)}
                 >
-                    <Button
-                        className={styles.btn}
-                        intent={'primary'}
-                        icon="build"
+                    <TooltipedButton 
+                        tipText='develop card'
+                        icon='build'
+                        onClick={() => filmDevelopHandle(film)}
                     />
-                    <Button
-                        className={styles.btn}
-                        intent={'primary'}
-                        icon="edit"
+                    <TooltipedButton 
+                        tipText='edit card'
+                        icon='edit'
                         onClick={() => filmEditHandler(film)}
                     />
                 </div>

@@ -5,21 +5,23 @@ import classNames from 'classnames';
 import React, { useState, useEffect, useRef } from 'react';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
-import { Film } from '../../logic/data-props'
+import { Film, sample_recipe } from '../../logic/data-props'
 import { initDB, getDB, getDBJson, readDBJson, clearDB, addDBFilm, getAllDBFilms } from '../../logic/db'
 
-import { Button, Card } from '@blueprintjs/core';
+import { Button, Card, Dialog, DialogBody, DialogFooter, InputGroup, Overlay } from '@blueprintjs/core';
 
 import { ProductItem } from '../product-item/product-item';
 import { FilmCard } from '../film-card/film-card';
 import { FilmCreator } from '../film-creator/film-creator';
-import { FilmProcessPreview } from '../film-process-preview/film-process-preview';
 import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
+import { inputEditor } from '../../logic/editor-helper';
+import { RecipeOverlay } from '../recipe_overlay/recipe-overlay';
 
 export interface Top_viewProps {
     className?: string;
     children?: React.ReactNode;
     editHandler: (film: Film) => void;
+    devHandler: (film: Film) => void;
 }
 
 interface MyDB extends DBSchema {
@@ -34,10 +36,14 @@ export const Top_view = ({
     className,
     children = 'Top_view',
     editHandler,
+    devHandler,
 }: Top_viewProps) => {
     const [items, setItems] = useState<Film[]>([]);
     const [showEditor, setShowEditor] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    
+    const [searchEnable, setSearchEnable] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -92,28 +98,48 @@ export const Top_view = ({
         reader.readAsText(file);
     };
 
+    const searchToggle = (cond: boolean) => {  
+        setSearchEnable(cond);
+        if (cond === false) setSearchQuery("")
+    }
+
+    const searchFilteredItems = (searchEnable && searchQuery !== "") ?
+        items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())) : items
+
     return (
         <div className={`${className}`}>
-            <FilmProcessPreview />
             <Card elevation={3} className={FilmCard_module.card}>
                 <TooltipedButton icon="add" tipText="Add new film" onClick={() => setShowEditor(true)} />
-                <TooltipedButton icon="trash" tipText="Wipeout database" onClick={clearDatabase} />
+                {/* <TooltipedButton icon="trash" tipText="Wipeout database" onClick={clearDatabase} /> */}
+                <TooltipedButton icon="search" tipText="Film Search" onClick={() => searchToggle(!searchEnable)} active />
                 <TooltipedButton icon="import" tipText="Import database" onClick={importDatabase} />
                 <input type="file" accept=".json" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileSelect} />
 
                 <TooltipedButton icon="export" tipText="Export database" onClick={downloadDatabase} />
             </Card>
+            { searchEnable ? <Card elevation={3} className={classNames(styles.card, styles.wrapper, className)}>
+                <InputGroup placeholder='search' value={searchQuery} onChange={(ev) => inputEditor(ev, setSearchQuery)}/>
+            </Card> : null }
             {showEditor && (
                 <FilmCreator
                     onSave={addItem}
                     onCancel={() => setShowEditor(false)}
                 />
             )}
-            {items.map((item) => (
+            {/* {items.map((item) => (
                 <FilmCard
                     key={item.id}
                     film={item}
                     filmEditHandler={editHandler}
+                    filmDevelopHandle={devHandler}
+                />
+            ))} */}
+            {searchFilteredItems.map((item) => (
+                <FilmCard
+                    key={item.id}
+                    film={item}
+                    filmEditHandler={editHandler}
+                    filmDevelopHandle={devHandler}
                 />
             ))}
         </div>

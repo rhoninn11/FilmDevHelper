@@ -7,12 +7,14 @@ import {
     IconName,
     MaybeElement,
 } from '@blueprintjs/core';
+import { useState } from 'react';
 
 export interface TooltipedButtonProps {
     className?: string;
     onClick?: () => void;
     icon: IconName | MaybeElement;
     tipText: string;
+    active?: boolean;
 }
 
 /**
@@ -25,21 +27,29 @@ export const TooltipedButton = ({
     onClick = () => {},
     icon = 'add',
     tipText = 'none',
+    active = false,
 }: TooltipedButtonProps) => {
+    const [isActive, setIsActive] = useState(false);
+    const intend = active && isActive ? "success" : "primary";
+    const handleClick = () => {
+        setIsActive(!isActive);
+        if (onClick) onClick();
+    };
+
     return (
         <div>
             <Tooltip
                 className={Classes.TOOLTIP_INDICATOR}
                 content={tipText}
-                intent="success"
+                intent={intend}
                 position="right"
             >
                 <Button
                     className={classNames(className, FilmCard_module.btn)}
                     large={true}
-                    intent="primary"
+                    intent={intend}
                     icon={icon}
-                    onClick={onClick}
+                    onClick={handleClick}
                 />
             </Tooltip>
         </div>

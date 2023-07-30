@@ -1,0 +1,19 @@
+// globals
+@import '../../globals/colors.module.scss';
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: $snow-white;
+    font-family: 'Lato', sans-serif;
+    padding: 0;
+    gap: 0;
+
+    &.wrapper {
+        border-radius: 12px;
+        min-width: 420px;
+        width: 420px;
+        padding: 2rem;
+        gap: 1rem;
+    }
+}

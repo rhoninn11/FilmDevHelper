@@ -1,0 +1,10 @@
+.frow {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.25rem;
+}
+.rowi {
+    max-width: 25%;
+    text-align: center;
+    direction: ltr;
+}

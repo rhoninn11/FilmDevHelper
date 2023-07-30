@@ -42,3 +42,10 @@
     height: 6rem;
     margin-bottom: 1rem;
 }
+
+.columns {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+}

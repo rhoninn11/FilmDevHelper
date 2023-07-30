@@ -1,0 +1,28 @@
+@import '../../globals/colors.module.scss';
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: $snow-white;
+    font-family: 'Lato', sans-serif;
+    padding: 0;
+    gap: 0;
+
+    &.wrapper {
+        border-radius: 12px;
+        min-width: 100px;
+        width: 100%;
+        padding: 1rem;
+        gap: 0.2rem;
+    }
+
+    &.horizontal {
+        flex-direction: row;
+
+    }
+
+    &.wider {
+        min-width: 420px;
+        width: 200px;
+    }
+}

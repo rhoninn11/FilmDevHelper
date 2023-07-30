@@ -54,9 +54,14 @@ export let clearDB = async () => {
 
 export let getDBJson = async () => {
     let db = await getDB();
+
     let films = await db.getAll(FILM_FIELD);
+    for (let i = 0; i < films.length; i++) films[i].id = i + 1;
     let devSteps = await db.getAll(DEV_STEP_FIELD);
+    for (let i = 0; i < devSteps.length; i++) devSteps[i].id = i + 1;
     let devStepNotes = await db.getAll(DEV_STOP_NOTE_FIELD);
+    for (let i = 0; i < devStepNotes.length; i++) devStepNotes[i].id = i + 1;
+
     let db_obj: DBContent = { 
         films: films,
         devSteps: devSteps,
@@ -65,6 +70,8 @@ export let getDBJson = async () => {
     
     let json = JSON.stringify(db_obj, null, 2);
     let blob = new Blob([json], { type: 'application/json' });
+
+
     return blob;
 }
 
@@ -78,6 +85,12 @@ export let readDBJson = async (ev: ProgressEvent<FileReader>) => {
     const films = content.films;    
     for (const film of films)
         await db.put(FILM_FIELD, film);
+
+    for (const devStep of content.devSteps)
+        await db.put(DEV_STEP_FIELD, devStep);
+
+    for (const devStepNote of content.devStepNotes)
+        await db.put(DEV_STOP_NOTE_FIELD, devStepNote);
 
     return films
 };

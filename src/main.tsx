@@ -7,11 +7,11 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 import App from './App';
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-);
-root.render(
-    <React.StrictMode>
-        <App />
+const rootHTML = document.getElementById('root') as HTMLElement
+const rootReact = ReactDOM.createRoot(rootHTML);
+
+rootReact.render(
+    <React.StrictMode >
+        <App/>
     </React.StrictMode>
 );
