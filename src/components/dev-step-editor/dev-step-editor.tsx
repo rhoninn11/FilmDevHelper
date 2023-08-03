@@ -111,8 +111,6 @@ export const DevStepEditor = ({
         setHasChanges(true);
     }
 
-    console.log(`devStepTemp: ${devStepTemp}`)
-
     return (
         <Card className={styles.fcolumn} elevation={Elevation.TWO} interactive>
             <InputGroup fill round placeholder="Step name" 

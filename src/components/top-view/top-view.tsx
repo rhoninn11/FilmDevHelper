@@ -15,7 +15,7 @@ import { FilmCard } from '../film-card/film-card';
 import { FilmCreator } from '../film-creator/film-creator';
 import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
 import { inputEditor } from '../../logic/editor-helper';
-import { RecipeOverlay } from '../recipe_overlay/recipe-overlay';
+import { RecipeOverlay } from '../higher-level/overlays/recipe_overlay/recipe-overlay';
 
 export interface Top_viewProps {
     className?: string;

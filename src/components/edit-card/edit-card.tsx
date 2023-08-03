@@ -20,6 +20,8 @@ import { editDBFilm, getAllDBDevSteps, addDBDevStep } from '../../logic/db';
 
 import { DevStep } from '../../logic/data-props';
 import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
+import { FilmMoreOptionsMenu } from "../higher-level/menus/film-more-options-menu/film-more-options-menu";
+import { DeleteOverlay } from "@/components/higher-level/overlays/delete-overlay/delete-overlay";
 
 const logo =
     'https://static.wixstatic.com/shapes/610b66_1b7705fd82034afaafdedcc636d8079f.svg'; // bp-logo.svg (256x298)
@@ -44,6 +46,8 @@ export const EditCard = ({
 }: EditCardProps) => {
     const submitCaption = "Accept"
     const formTitle = "Edit";
+
+    const [showOverlay, setShowOverlay] = useState<boolean>(false)
 
     const [filmName, setFilmName] = useState(film.name)
     const [filmDesc, setFilmDesc] = useState(film.description)
@@ -83,8 +87,10 @@ export const EditCard = ({
                 title: "Empty development title",
                 content: "Empty informations about development step",
                 filmId: film.id,
-                timer: false,
-                timerLength_s: 0,
+                timer: true,
+                timerLength_s: 10,
+                temp: 21,
+                deleted: false,
             },
             exists: false,
         }
@@ -99,21 +105,37 @@ export const EditCard = ({
         setCreatedDevSteps(createdDevSteps + 1);
     }
 
+    const _remove_film_soft = () => {
+        setShowOverlay(true)
+    }
+
+    const _remove_film_hard = () => {
+        console.log("some real delete actions")
+        setShowOverlay(false)
+    }
+
+    const remove_overlay =  showOverlay ?
+        <DeleteOverlay
+            onClose={() => setShowOverlay(false)}
+            onDelete={_remove_film_hard}/>
+        : null
+
     return (
         <div className={styles.columns}>
             <Card
                 className={classNames(styles.card, styles.wrapper, className)}
                 elevation={Elevation.FOUR}
             >
-                <div >
-                    <H1>Edit</H1>
-                </div>
+                <H1>Edit</H1>
                 <img className={styles.logo} src={logo} alt="" />
-                <InputGroup value={filmName} onChange={(ev) => inputEditor(ev, setFilmName)}
+                <InputGroup value={filmName} 
+                    onChange={(ev) => inputEditor(ev, setFilmName)}
                     placeholder="Film Name" fill round />
-                <TextArea value={filmDesc} onChange={(ev) => textAreaEditor(ev, setFilmDesc)}
-                    />
-                <TooltipedButton icon="add" tipText='Add next step' onClick={addStep}/>
+                <TextArea value={filmDesc} 
+                    onChange={(ev) => textAreaEditor(ev, setFilmDesc)}/>
+                <FilmMoreOptionsMenu onAddNextStep={addStep} onRemoveFilm={_remove_film_soft}/>
+                {remove_overlay}
+                <div className={styles.columns}>
                     <Button
                         text="Accept"
                         className={styles.btn}
@@ -125,6 +147,7 @@ export const EditCard = ({
                         className={styles.btn}
                         onClick={onCancel}
                     />
+                </div>
             </Card>
             <Card className={classNames(styles.card, styles.wrapper, className)}>
                 {devSteps.map((step) => (

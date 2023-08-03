@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Classes } from '@blueprintjs/core';
 import classNames from 'classnames';
 
-import { RecipeOverlay } from './components/recipe_overlay/recipe-overlay';
+import { RecipeOverlay } from './components/higher-level/overlays/recipe_overlay/recipe-overlay';
 import { EditCard } from './components/edit-card/edit-card';
 import { DevCard } from './components/dev-card/dev-card';
 import { ProcessCard } from './components/process-card/process-card';
