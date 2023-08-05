@@ -103,8 +103,11 @@ export const Top_view = ({
         if (cond === false) setSearchQuery("")
     }
 
+    const alive_items = items.filter((item) => item.deleted == false)
+
     const searchFilteredItems = (searchEnable && searchQuery !== "") ?
-        items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())) : items
+        alive_items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())) 
+        : alive_items
 
     return (
         <div className={`${className}`}>
@@ -126,14 +129,7 @@ export const Top_view = ({
                     onCancel={() => setShowEditor(false)}
                 />
             )}
-            {/* {items.map((item) => (
-                <FilmCard
-                    key={item.id}
-                    film={item}
-                    filmEditHandler={editHandler}
-                    filmDevelopHandle={devHandler}
-                />
-            ))} */}
+            
             {searchFilteredItems.map((item) => (
                 <FilmCard
                     key={item.id}

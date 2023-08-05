@@ -61,7 +61,6 @@ export const RecipeOverlay = ({
     const startDevelopment = () => {
         setVisible(false);
 
-        console.log("development just started");
         if (onStart)
             onStart();
     }

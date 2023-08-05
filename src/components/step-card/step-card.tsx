@@ -22,7 +22,6 @@ export const StepCard = ({
 }: StepCardProps) => {
 
     const mOnDevelopHandler = () =>{
-        console.log(`first step title ${step.title}`);
         if (onDevelop) onDevelop(step);
     }
 

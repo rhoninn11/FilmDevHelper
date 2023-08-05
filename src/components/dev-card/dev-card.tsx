@@ -43,7 +43,6 @@ export const DevCard = ({
             allSteps: devSteps,
             firstStep: firstStep
         }
-        console.log(`dev card`);
         if (onDevelop) onDevelop(recipe);
         if (onCancel) onCancel();
     }

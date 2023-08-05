@@ -6,6 +6,7 @@ import {
     Button,
     Card,
     InputGroup,
+    Icon,
 } from '@blueprintjs/core';
 import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
 import { DevStepEditor } from '../dev-step-editor/dev-step-editor';
@@ -14,13 +15,14 @@ import classNames from 'classnames';
 import styles from './edit-card.module.scss';
 
 import { Film } from '../../logic/data-props'
+import { FilmMenuOption } from '@/logic/my-types'
 import { useState, useEffect } from 'react';
 
 import { editDBFilm, getAllDBDevSteps, addDBDevStep } from '../../logic/db';
 
 import { DevStep } from '../../logic/data-props';
 import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
-import { FilmMoreOptionsMenu } from "../higher-level/menus/film-more-options-menu/film-more-options-menu";
+import { MoreOptionsMenu } from "../higher-level/menus/more-options-menu/more-options-menu";
 import { DeleteOverlay } from "@/components/higher-level/overlays/delete-overlay/delete-overlay";
 
 const logo =
@@ -57,8 +59,10 @@ export const EditCard = ({
 
     useEffect(() => {
         const fetchData = async () => {
-            const allSteps = await getAllDBDevSteps();
-            const filteredSteps = allSteps.filter((step) => step.filmId === film.id);
+            let allSteps = await getAllDBDevSteps();
+            let filteredSteps = allSteps.filter((step) => step.filmId === film.id);
+            filteredSteps = filteredSteps.filter((step) => step.deleted == false)
+
             const thisFilmSteps = filteredSteps.map((step) => ({
                 devStep: step,
                 exists: true,
@@ -71,14 +75,30 @@ export const EditCard = ({
         fetchData();
     }, []);
 
-    const acceptChanges = async () => {
-        const filmAfterEdit = film
-        filmAfterEdit.name = filmName
-        filmAfterEdit.description = filmDesc
 
-        await editDBFilm(filmAfterEdit.id, filmAfterEdit)
+    const _apply_changes = async (film: Film) => {
+        await editDBFilm(film.id, film)
         if (onCancel) onCancel()
     }
+
+    const remove_film_soft = () => {
+        setShowOverlay(true)
+    }
+
+    const remove_film_hard = async () => {
+        let film_2_remove = film
+        film_2_remove.deleted = true
+        await _apply_changes(film_2_remove)
+    }
+
+    const apply_edits = async () => {
+        let film_edit = film
+        film_edit.name = filmName
+        film_edit.description = filmDesc
+        await _apply_changes(film_edit)
+    }
+
+    
 
     const newStep = () => {
         const new_DevStep: _DevStep = {
@@ -105,20 +125,25 @@ export const EditCard = ({
         setCreatedDevSteps(createdDevSteps + 1);
     }
 
-    const _remove_film_soft = () => {
-        setShowOverlay(true)
-    }
-
-    const _remove_film_hard = () => {
-        console.log("some real delete actions")
-        setShowOverlay(false)
-    }
-
     const remove_overlay =  showOverlay ?
         <DeleteOverlay
+            title={`Remove film ${filmName}`}
             onClose={() => setShowOverlay(false)}
-            onDelete={_remove_film_hard}/>
+            onDelete={remove_film_hard}/>
         : null
+
+        
+    const more_option: FilmMenuOption[] = [{
+        icon: <Icon icon="add" />,
+        text: "add next step",
+        action: addStep
+    },{
+        icon: <Icon icon="remove" />,
+        text: "remove film",
+        action: remove_film_soft
+    }]
+
+
 
     return (
         <div className={styles.columns}>
@@ -127,20 +152,22 @@ export const EditCard = ({
                 elevation={Elevation.FOUR}
             >
                 <H1>Edit</H1>
+                <p>{film.deleted ? "deleted" : "alive"}</p>
                 <img className={styles.logo} src={logo} alt="" />
                 <InputGroup value={filmName} 
                     onChange={(ev) => inputEditor(ev, setFilmName)}
                     placeholder="Film Name" fill round />
                 <TextArea value={filmDesc} 
                     onChange={(ev) => textAreaEditor(ev, setFilmDesc)}/>
-                <FilmMoreOptionsMenu onAddNextStep={addStep} onRemoveFilm={_remove_film_soft}/>
+                <MoreOptionsMenu 
+                    options={more_option}/>
                 {remove_overlay}
                 <div className={styles.columns}>
                     <Button
                         text="Accept"
                         className={styles.btn}
                         intent="primary"
-                        onClick={acceptChanges}
+                        onClick={apply_edits}
                     />
                     <Button
                         text="Cancel"

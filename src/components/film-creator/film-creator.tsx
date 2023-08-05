@@ -23,7 +23,8 @@ export const FilmCreator = ({
         const newItem: Film = {
             id: 0,
             name: name,
-            description: description
+            description: description,
+            deleted: false,
         }
         // check for errors
         onSave(newItem);

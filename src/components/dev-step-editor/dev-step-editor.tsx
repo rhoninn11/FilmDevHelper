@@ -1,4 +1,4 @@
-import { Card, Button, H2, Elevation, InputGroup, TextArea, Switch, NumericInput } from '@blueprintjs/core';
+import { Card, Button, H2, Elevation, InputGroup, TextArea, Switch, NumericInput, Icon } from '@blueprintjs/core';
 import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
 
 import classNames from 'classnames';
@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
 import { editDBDevStep } from '../../logic/db';
 import { TimePicker } from '../time-picker/time-picker';
+import { DeleteOverlay } from '@/components/higher-level/overlays/delete-overlay/delete-overlay';
+import { MoreOptionsMenu } from '@/components/higher-level/menus/more-options-menu/more-options-menu';
 
 export interface DevStepEditorProps {
     className?: string;
@@ -26,17 +28,18 @@ export const DevStepEditor = ({
 }: DevStepEditorProps) => {
     const [hasChanges, setHasChanges] = useState(false)
     const [lastData, setLastData] = useState<DevStep>(devStep)
+    const [showOverlay, setShowOverlay] = useState(false)
 
     const [devStepTitle, setDevStepTitle] = useState<string>(devStep.title)
     const [devStepContent, setDevStepContent] = useState<string>(devStep.content)
-    const [devStepTimer, setDevStepTimer] = useState<boolean>(devStep.timer)
     const [devStepTimerLength, setDevStepTimerLength] = useState<number>(devStep.timerLength_s)
     const [devStepTemp, setDevStepTemp] = useState<number>(devStep.temp)
+
+    const [isDeleted, setIsDeleted] = useState<boolean>(false)
     
     const setComponentStates = (lastData: DevStep) => {
         setDevStepTitle(lastData.title)
         setDevStepContent(lastData.content)
-        setDevStepTimer(lastData.timer)
         setDevStepTimerLength(lastData.timerLength_s)
         setDevStepTemp(lastData.temp)
     }
@@ -45,26 +48,24 @@ export const DevStepEditor = ({
         let devStepEdit: DevStep = baseline;
         devStepEdit.title = devStepTitle;
         devStepEdit.content = devStepContent;
-        devStepEdit.timer = devStepTimer;
+        devStepEdit.timer = true;
         devStepEdit.timerLength_s = devStepTimerLength;
         devStepEdit.temp = devStepTemp;
 
         return devStepEdit;
     }
 
-    const submitStepEdit_2_Db = async () => {
-        if (!hasChanges) return;
-
-        let devStepEdit: DevStep = updateBaseLineStep(lastData)
-        
+    const _submitStepEdit_2_Db = async (baseline: DevStep) => {
+        let devStepEdit: DevStep = updateBaseLineStep(baseline)
+        console.log("devStepEdit", devStepEdit)
         setLastData(devStepEdit)
         await editDBDevStep(devStepEdit.id, devStepEdit)
         setHasChanges(false)
     }
+        
 
-    const devStepTimerSetter = (value: boolean) => {
-        setDevStepTimer(value);
-        setHasChanges(true);
+    const submitStepEdit_2_Db = async () => {
+        _submitStepEdit_2_Db(lastData)
     }
 
     const devStepTimerLengthSetter = (value: number) => {
@@ -111,24 +112,51 @@ export const DevStepEditor = ({
         setHasChanges(true);
     }
 
-    return (
-        <Card className={styles.fcolumn} elevation={Elevation.TWO} interactive>
-            <InputGroup fill round placeholder="Step name" 
-                value={devStepTitle} onChange={(ev) => inputEditor(ev, setDevStepTitle, setHasChanges)}/>
-            <TextArea 
-                value={devStepContent} onChange={(ev) => textAreaEditor(ev, setDevStepContent, setHasChanges)}/>
-                <Switch checked={devStepTimer} label="Timer" onChange={(ev) => devStepTimerSetter(ev.currentTarget.checked)}/>
-                {devStepTimer ? <TimePicker value={devStepTimerLength} valueSetter={devStepTimerLengthSetter}/> : null}
-                <div className={styles.frow}>
-                    <input type="number" placeholder="°C" 
-                        className={styles.rowi} 
-                        min={-40} max={40}
-                        value={devStepTemp} onChange={(ev) => cChanged(ev)}/>
-                    <span>°C</span>
-                </div>
-                
+    const remove_step_hard = async () => {
+        let step_to_remove: DevStep = {...lastData}
+        step_to_remove.deleted = true;
+        console.log("step_to_remove", step_to_remove)
+        await _submitStepEdit_2_Db(step_to_remove)
+        setIsDeleted(true)
+    }
 
-            {hasChanges ? buttonArea : null}
-        </Card>
-    );
+    const remove_step_soft = () => {
+        setShowOverlay(true)
+    }
+
+    const remove_overlay =  showOverlay ?
+    <DeleteOverlay
+        title={`Remove step (${devStepTitle})`}
+        onClose={() => setShowOverlay(false)}
+        onDelete={() => remove_step_hard()}/>
+    : null
+
+    const more_option: FilmMenuOption[] = [{
+        icon: <Icon icon="remove" />,
+        text: "remove step",
+        action: remove_step_soft
+    }]
+
+    const editor = isDeleted ? <div></div>
+        :<Card className={styles.fcolumn} elevation={Elevation.TWO} interactive>
+            <p>{lastData.deleted ? "deleted" : "alive"}</p>
+        <InputGroup fill round placeholder="Step name" 
+            value={devStepTitle} onChange={(ev) => inputEditor(ev, setDevStepTitle, setHasChanges)}/>
+        <TextArea 
+            value={devStepContent} onChange={(ev) => textAreaEditor(ev, setDevStepContent, setHasChanges)}/>
+        <TimePicker value={devStepTimerLength} valueSetter={devStepTimerLengthSetter}/>
+        <div className={styles.frow}>
+            <input type="number" placeholder="°C" 
+                className={styles.rowi} 
+                min={-40} max={40}
+                value={devStepTemp} onChange={(ev) => cChanged(ev)}/>
+            <span>°C</span>
+        </div>
+        {remove_overlay}
+        <MoreOptionsMenu 
+                options={more_option}/>
+        {hasChanges ? buttonArea : null}
+    </Card>
+
+    return editor;
 };

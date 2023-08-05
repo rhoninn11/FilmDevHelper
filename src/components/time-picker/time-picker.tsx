@@ -30,7 +30,6 @@ export const TimePicker = ({
         ev: React.ChangeEvent<HTMLInputElement>,
         choooser: 'm' | 's',     
     ) => {
-        console.log(`${ev.target.value}`)
         let intValue = parseInt(ev.target.value);
         if (Number.isNaN(intValue)) intValue = 0;
         let limitedValue = limit_overflow(intValue)
@@ -38,10 +37,7 @@ export const TimePicker = ({
         if (choooser === 'm') min = limitedValue;
         if (choooser === 's') sec = limitedValue;
 
-        console.log(`min: ${min}, sec: ${sec}`);
-        console.log(`value: ${intValue}, limitedValue: ${limitedValue}, choooser: ${choooser}`);
         let newValue = min * 60 + sec;
-        console.log(`newValue: ${newValue}`);
         valueSetter(newValue);
     }
 
