@@ -1,0 +1,13 @@
+.card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    border-radius: 22px;
+    min-width: 420px;
+    position: static;
+    top: 0px;
+}
+
+.search {
+    min-width: 100%;
+}

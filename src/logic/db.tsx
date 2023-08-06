@@ -140,3 +140,27 @@ export let getAllDBDevSteps = async () => {
     const allSteps: DevStep[] = await db.getAll(DEV_STEP_FIELD);
     return allSteps;
 }
+
+export let getAllDBDevStepNote = async () => {
+    const db = await initDB();
+    const allNotes: DevStepNote[] = await db.getAll(DEV_STOP_NOTE_FIELD);
+    return allNotes;
+}
+
+export let addDBDevStepNote = async (newNote: DevStepNote) => {
+    const db = await getDB();
+    const tx = db.transaction(DEV_STOP_NOTE_FIELD, 'readwrite');
+    const store = tx.objectStore(DEV_STOP_NOTE_FIELD);
+    await store.add(newNote);
+}
+
+export let editDBDevStepNote = async (id: number, updated_note: DevStepNote) => {
+    const db = await getDB();
+    const tx = db.transaction(DEV_STOP_NOTE_FIELD, 'readwrite');
+    const store = tx.objectStore(DEV_STOP_NOTE_FIELD);
+    const devStep = await store.get(id);
+    if (devStep) {
+        await store.put(updated_note);
+    }
+}
+

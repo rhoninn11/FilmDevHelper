@@ -10,8 +10,9 @@ import { useState } from 'react';
 import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
 import { editDBDevStep } from '../../logic/db';
 import { TimePicker } from '../time-picker/time-picker';
-import { DeleteOverlay } from '@/components/higher-level/overlays/delete-overlay/delete-overlay';
-import { MoreOptionsMenu } from '@/components/higher-level/menus/more-options-menu/more-options-menu';
+import { DeleteOverlay } from '../higher-level/overlays/delete-overlay/delete-overlay';
+import { MoreOptionsMenu } from '../higher-level/menus/more-options-menu/more-options-menu';
+import { FilmMenuOption } from '../../logic/my-types';
 
 export interface DevStepEditorProps {
     className?: string;
@@ -138,25 +139,24 @@ export const DevStepEditor = ({
     }]
 
     const editor = isDeleted ? <div></div>
-        :<Card className={styles.fcolumn} elevation={Elevation.TWO} interactive>
-            <p>{lastData.deleted ? "deleted" : "alive"}</p>
-        <InputGroup fill round placeholder="Step name" 
-            value={devStepTitle} onChange={(ev) => inputEditor(ev, setDevStepTitle, setHasChanges)}/>
-        <TextArea 
-            value={devStepContent} onChange={(ev) => textAreaEditor(ev, setDevStepContent, setHasChanges)}/>
-        <TimePicker value={devStepTimerLength} valueSetter={devStepTimerLengthSetter}/>
-        <div className={styles.frow}>
-            <input type="number" placeholder="°C" 
-                className={styles.rowi} 
-                min={-40} max={40}
-                value={devStepTemp} onChange={(ev) => cChanged(ev)}/>
-            <span>°C</span>
-        </div>
-        {remove_overlay}
-        <MoreOptionsMenu 
-                options={more_option}/>
-        {hasChanges ? buttonArea : null}
-    </Card>
+        :   <Card className={classNames(styles.fcolumn, styles.card)} elevation={Elevation.TWO} interactive>
+                <InputGroup fill round placeholder="Step name" 
+                    value={devStepTitle} onChange={(ev) => inputEditor(ev, setDevStepTitle, setHasChanges)}/>
+                <TextArea className={styles.higher}
+                    value={devStepContent} onChange={(ev) => textAreaEditor(ev, setDevStepContent, setHasChanges)}/>
+                <TimePicker value={devStepTimerLength} valueSetter={devStepTimerLengthSetter}/>
+                <div className={styles.frow}>
+                    <input type="number" placeholder="°C" 
+                        className={styles.rowi} 
+                        min={-40} max={40}
+                        value={devStepTemp} onChange={(ev) => cChanged(ev)}/>
+                    <span>°C</span>
+                </div>
+                {remove_overlay}
+                <MoreOptionsMenu 
+                        options={more_option}/>
+                {hasChanges ? buttonArea : null}
+            </Card>
 
     return editor;
 };

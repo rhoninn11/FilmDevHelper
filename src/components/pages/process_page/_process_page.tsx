@@ -3,11 +3,11 @@ import { Code } from "@blueprintjs/icons";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 
-import styles from "./process-card.module.scss"
-import { DevRecipe, DevStep } from "../../logic/data-props";
-import { StepProcessPreview } from "../step-process-preview/step-process-preview";
+import styles from "./s.module.scss"
+import { DevRecipe, DevStep } from "../../../logic/data-props";
+import { StepProcessPreview } from "../../step-process-preview/step-process-preview";
 
-interface ProcessCardProps {
+interface ProcessPageProps {
     className?: string;
     children?: React.ReactNode;
     recipe: DevRecipe;
@@ -21,13 +21,13 @@ interface DevStepOps {
     finished: boolean;
 }
 
-export const ProcessCard = ({
+export const ProcessPage = ({
     className,
     children,
     recipe,
     onSoftClose,
     onHardClose,
-}: ProcessCardProps ) => {
+}: ProcessPageProps ) => {
 
     const [myRecipe, setMyRecipe] = useState<DevRecipe>(recipe);
     const [finished, setFinished] = useState<boolean>(false);
@@ -96,24 +96,25 @@ export const ProcessCard = ({
 
 
     let finish_button = finished ? 
-        <Button onClick={closeCardHard} style={{ margin: "" }}>
+        <Button 
+            onClick={closeCardHard}
+            className={styles.minw}>
             Exit</Button> 
-        : null
-
-    let add_note_button = finished ? 
-        <Button onClick={() => console.log("add notes not implemented")} style={{ margin: "" }}>
-            {`AddNote (${recipe.filmToDevelop.name})`}</Button> 
         : null
 
     return (
         <Card >
             Progress:
             {steps.map(preview_display)}
-            <Button onClick={closeCardSoft} style={{ margin: "" }}>
-                Close card
-            </Button>
-            {finish_button}
-            {add_note_button}
+            <div className={styles.frow}>
+                <Button 
+                    onClick={closeCardSoft}
+                    className={styles.minw}>
+                        Close card
+                </Button>
+                {finish_button}
+            </div>
+
         </Card>
     );
 };

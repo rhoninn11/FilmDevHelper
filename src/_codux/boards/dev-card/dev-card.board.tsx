@@ -1,5 +1,5 @@
 import { createBoard } from '@wixc3/react-board';
-import { DevCard } from '../../../components/dev-card/dev-card';
+import { DevPage } from '../../../components/pages/dev_page/_dev_page';
 
 import { Film } from '../../../logic/data-props';
 
@@ -12,5 +12,5 @@ const film: Film = {
 
 export default createBoard({
     name: 'DevCard',
-    Board: () => <DevCard film={film}/>
+    Board: () => <DevPage film={film}/>
 });

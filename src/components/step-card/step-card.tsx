@@ -9,6 +9,7 @@ export interface StepCardProps {
     className?: string;
     step: DevStep;
     onDevelop?: (firstStep: DevStep) => void;
+    onShowNotes?: (step: DevStep) => void;
 }
 
 /**
@@ -18,11 +19,16 @@ export interface StepCardProps {
 export const StepCard = ({ 
     className,
     step,
-    onDevelop
+    onDevelop,
+    onShowNotes,
 }: StepCardProps) => {
 
     const mOnDevelopHandler = () =>{
         if (onDevelop) onDevelop(step);
+    }
+
+    const _on_show_notes = () => {
+        if (onShowNotes) onShowNotes(step);
     }
 
     return (
@@ -36,7 +42,8 @@ export const StepCard = ({
                 {step.timerLength_s % 60}
                 {' sec'}
             </Card>
-            <Card className={classNames(styles.wrapper, styles.card)}>
+            <Card 
+                className={classNames(styles.wrapper, styles.card)}>
                 {'Room temperature: '}
                 {step.temp}
                 {'°C'}
@@ -47,7 +54,10 @@ export const StepCard = ({
                     tipText={'Start process'}
                     onClick={mOnDevelopHandler}
                 />
-                <TooltipedButton icon={'annotation'} tipText={'Notes'} active />
+                <TooltipedButton 
+                    icon={'annotation'} 
+                    tipText={'Notes'} 
+                    onClick={_on_show_notes}/>
             </Card>
         </Card>
     );

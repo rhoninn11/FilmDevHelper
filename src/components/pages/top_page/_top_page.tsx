@@ -1,43 +1,33 @@
-import FilmCard_module from '../film-card/film-card.module.scss';
-import styles from './top-view.module.scss';
+import FilmCard_module from '../film-card/s.module.scss';
+import styles from './s.module.scss';
 import classNames from 'classnames';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
-import { Film, sample_recipe } from '../../logic/data-props'
-import { initDB, getDB, getDBJson, readDBJson, clearDB, addDBFilm, getAllDBFilms } from '../../logic/db'
+import { Film } from '../../../logic/data-props'
+import { initDB, getDB, getDBJson, readDBJson, clearDB, addDBFilm, getAllDBFilms } from '../../../logic/db'
 
-import { Button, Card, Dialog, DialogBody, DialogFooter, InputGroup, Overlay } from '@blueprintjs/core';
+import { Card, Classes, Icon, InputGroup, Tag} from '@blueprintjs/core';
 
-import { ProductItem } from '../product-item/product-item';
-import { FilmCard } from '../film-card/film-card';
-import { FilmCreator } from '../film-creator/film-creator';
-import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
-import { inputEditor } from '../../logic/editor-helper';
-import { RecipeOverlay } from '../higher-level/overlays/recipe_overlay/recipe-overlay';
+import { FilmCard } from '../../film-card/film-card';
+import { FilmCreator } from '../../film-creator/film-creator';
+import { TooltipedButton } from '../../tooltiped-button/tooltiped-button';
+import { inputEditor } from '../../../logic/editor-helper';
 
-export interface Top_viewProps {
+export interface TopPage {
     className?: string;
     children?: React.ReactNode;
     editHandler: (film: Film) => void;
     devHandler: (film: Film) => void;
 }
 
-interface MyDB extends DBSchema {
-    items: {
-        key: number;
-        value: Film;
-    },
-
-}
-
-export const Top_view = ({
+export const TopPage = ({
     className,
     children = 'Top_view',
     editHandler,
     devHandler,
-}: Top_viewProps) => {
+}: TopPage) => {
     const [items, setItems] = useState<Film[]>([]);
     const [showEditor, setShowEditor] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -105,13 +95,18 @@ export const Top_view = ({
 
     const alive_items = items.filter((item) => item.deleted == false)
 
-    const searchFilteredItems = (searchEnable && searchQuery !== "") ?
+    const found_items = (searchEnable && searchQuery !== "") ?
         alive_items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())) 
         : alive_items
 
+    const found_item_count = <Tag minimal={true} 
+            intent={found_items.length > 0 ? 'success' : 'danger'}>
+                {found_items.length}
+            </Tag>;
+
     return (
         <div className={`${className}`}>
-            <Card elevation={3} className={FilmCard_module.card}>
+            <Card elevation={3} className={styles.card}>
                 <TooltipedButton icon="add" tipText="Add new film" onClick={() => setShowEditor(true)} />
                 {/* <TooltipedButton icon="trash" tipText="Wipeout database" onClick={clearDatabase} /> */}
                 <TooltipedButton icon="search" tipText="Film Search" onClick={() => searchToggle(!searchEnable)} active />
@@ -121,7 +116,14 @@ export const Top_view = ({
                 <TooltipedButton icon="export" tipText="Export database" onClick={downloadDatabase} />
             </Card>
             { searchEnable ? <Card elevation={3} className={classNames(styles.card, styles.wrapper, className)}>
-                <InputGroup placeholder='search' value={searchQuery} onChange={(ev) => inputEditor(ev, setSearchQuery)}/>
+                <InputGroup 
+                className={classNames(styles.search, Classes.ROUND)}
+                    leftElement={<Icon icon="search" />}
+                    onChange={(ev) => inputEditor(ev, setSearchQuery)}
+                    placeholder="Search film by name..."
+                    rightElement={found_item_count}
+                    value={searchQuery}
+                />
             </Card> : null }
             {showEditor && (
                 <FilmCreator
@@ -130,7 +132,7 @@ export const Top_view = ({
                 />
             )}
             
-            {searchFilteredItems.map((item) => (
+            {found_items.map((item) => (
                 <FilmCard
                     key={item.id}
                     film={item}

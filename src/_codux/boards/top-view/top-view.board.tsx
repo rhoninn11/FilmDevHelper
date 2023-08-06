@@ -1,11 +1,11 @@
 import { createBoard } from '@wixc3/react-board';
-import { Top_view } from '../../../components/top-view/top-view';
+import { TopPage } from '../../../components/pages/top_page/_top_page';
 import { Card, H5, Button } from '@blueprintjs/core';
 
 export default createBoard({
     name: 'Top_view',
     Board: () => (
-        <Top_view
+        <TopPage
             children={
                 <Card elevation={3}>
                     <H5>

@@ -1,5 +1,5 @@
 // globals
-@import '../../globals/colors.module.scss';
+@import '../../../globals/colors.module.scss';
 
 // Styles
 .card {
@@ -12,8 +12,8 @@
 
     &.wrapper {
         border-radius: 12px;
-        min-width: 280px;
-        width: 320px;
+        min-width: 420px;
+        width: 420px;
         padding: 2rem;
         gap: 1rem;
     }
@@ -56,4 +56,9 @@
     align-items: flex-start;
     gap: 1rem;
     align-self: center;
+}
+
+.higher {
+    min-width: 100%;
+    min-height: 120px;
 }

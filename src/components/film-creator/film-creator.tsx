@@ -1,7 +1,7 @@
 import { Button, FormGroup, InputGroup } from '@blueprintjs/core';
 import classNames from 'classnames';
 import styles from './film-creator.module.scss';
-import { Film } from '../top-view/top-view';
+import { Film } from '../pages/top_page/_top_page';
 import { useState } from 'react';
 
 

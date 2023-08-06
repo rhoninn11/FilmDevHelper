@@ -1,6 +1,3 @@
-// globals
-@import '../../globals/colors.module';
-
 .root {
     max-width: 350px;
     min-height: 100%;
@@ -29,14 +26,4 @@
     min-width: 100%;
     min-height: 120px;
 }
-
-.card {
-    display: flex;
-    flex-direction: column;
-    background-color: $snow-white;
-    font-family: 'Lato', sans-serif;
-    padding: 0;
-    gap: 0;
-}
-
 

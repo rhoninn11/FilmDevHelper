@@ -8,27 +8,26 @@ import {
     InputGroup,
     Icon,
 } from '@blueprintjs/core';
-import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
-import { DevStepEditor } from '../dev-step-editor/dev-step-editor';
+import { DevStepEditor } from '../../dev-step-editor/dev-step-editor';
 
 import classNames from 'classnames';
-import styles from './edit-card.module.scss';
+import styles from './s.module.scss';
 
-import { Film } from '../../logic/data-props'
-import { FilmMenuOption } from '@/logic/my-types'
+import { Film } from '../../../logic/data-props'
+import { FilmMenuOption } from '../../../logic/my-types'
 import { useState, useEffect } from 'react';
 
-import { editDBFilm, getAllDBDevSteps, addDBDevStep } from '../../logic/db';
+import { editDBFilm, getAllDBDevSteps, addDBDevStep } from '../../../logic/db';
 
-import { DevStep } from '../../logic/data-props';
-import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
-import { MoreOptionsMenu } from "../higher-level/menus/more-options-menu/more-options-menu";
-import { DeleteOverlay } from "@/components/higher-level/overlays/delete-overlay/delete-overlay";
+import { DevStep } from '../../../logic/data-props';
+import { inputEditor, textAreaEditor } from '../../../logic/editor-helper';
+import { MoreOptionsMenu } from "../../higher-level/menus/more-options-menu/more-options-menu";
+import { DeleteOverlay } from '../../higher-level/overlays/delete-overlay/delete-overlay';
 
 const logo =
     'https://static.wixstatic.com/shapes/610b66_1b7705fd82034afaafdedcc636d8079f.svg'; // bp-logo.svg (256x298)
 
-export interface EditCardProps {
+interface EditPageProps {
     className?: string;
     children?: React.ReactNode;
     film: Film
@@ -40,21 +39,22 @@ interface _DevStep {
     exists: boolean;
 }
 
-export const EditCard = ({
+export const EditPage = ({
     className,
     children,
     film,
     onCancel
-}: EditCardProps) => {
+}: EditPageProps) => {
     const submitCaption = "Accept"
     const formTitle = "Edit";
 
     const [showOverlay, setShowOverlay] = useState<boolean>(false)
+    const [totalDevSteps, setTotalDevSteps] = useState<number>(0)
+
 
     const [filmName, setFilmName] = useState(film.name)
     const [filmDesc, setFilmDesc] = useState(film.description)
     const [devSteps, setDevSteps] = useState<_DevStep[]>([])
-    const [totalDevSteps, setTotalDevSteps] = useState<number>(0)
     const [createdDevSteps, setCreatedDevSteps] = useState<number>(0)
 
     useEffect(() => {
@@ -152,12 +152,12 @@ export const EditCard = ({
                 elevation={Elevation.FOUR}
             >
                 <H1>Edit</H1>
-                <p>{film.deleted ? "deleted" : "alive"}</p>
                 <img className={styles.logo} src={logo} alt="" />
                 <InputGroup value={filmName} 
                     onChange={(ev) => inputEditor(ev, setFilmName)}
                     placeholder="Film Name" fill round />
-                <TextArea value={filmDesc} 
+                <TextArea className={styles.higher}
+                    value={filmDesc} 
                     onChange={(ev) => textAreaEditor(ev, setFilmDesc)}/>
                 <MoreOptionsMenu 
                     options={more_option}/>
