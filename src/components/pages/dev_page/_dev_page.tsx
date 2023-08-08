@@ -1,4 +1,4 @@
-import { Card, Button, H2, Elevation } from '@blueprintjs/core';
+import { Card, Button, H2, Elevation, Classes } from '@blueprintjs/core';
 import classNames from 'classnames';
 import styles from './s.module.scss';
 
@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { addDBDevStepNote, getAllDBDevStepNote, getAllDBDevSteps } from '../../../logic/db';
 import { StepCard } from '../../step-card/step-card';
 import { TooltipedButton } from '../../tooltiped-button/tooltiped-button';
-import { NoteEditor } from '../../note-editor/note_editor';
+import { NoteEditor } from '../../editors/note-editor/note_editor';
 
 interface DevPageProps {
     className?: string;
@@ -69,7 +69,6 @@ export const DevPage = ({
             setCurrentStep(step);
             setCurrentStepNotes(devStepNotes.filter((note) => note.devStepId == step.id));
         }
-
     }
 
     const mOnDevelopHandler = (firstStep: DevStep) => {
@@ -99,7 +98,7 @@ export const DevPage = ({
         })
     }
 
-    const notes_tab = currentStep ?  <Card
+    const notes_tab = currentStep ? <Card
         className={classNames(styles.card, styles.wrapper, className)}
         elevation={Elevation.TWO}>
             {currentStepNotes
@@ -108,6 +107,7 @@ export const DevPage = ({
                     <NoteEditor dev_step={currentStep} note={note} key={note.id}/>
             )}
             <Button
+                className={Classes.ROUND}
                 icon="add"
                 type="button"
                 text="Add note"
@@ -116,6 +116,7 @@ export const DevPage = ({
             />
         </Card>
         : null;
+    
 
     return (
         <div className={styles.columns}>
@@ -135,6 +136,7 @@ export const DevPage = ({
                         step={step}
                         onDevelop={mOnDevelopHandler}
                         onShowNotes={set_current_step}
+                        selected={currentStep!= null && currentStep.id == step.id}
                         />
                 ))}
             </Card>

@@ -1,7 +1,7 @@
-import { Button, FormGroup, InputGroup } from '@blueprintjs/core';
+import { Button, ButtonGroup, FormGroup, InputGroup, Label } from '@blueprintjs/core';
 import classNames from 'classnames';
 import styles from './film-creator.module.scss';
-import { Film } from '../pages/top_page/_top_page';
+import { Film, FilmType} from '../../logic/data-props';
 import { useState } from 'react';
 
 
@@ -25,10 +25,20 @@ export const FilmCreator = ({
             name: name,
             description: description,
             deleted: false,
+            type: FilmType.COLOR,
         }
         // check for errors
         onSave(newItem);
     };
+
+    // const type_select = <Label>
+    //     {label}
+    //     <ButtonGroup fill={true} style={{ marginTop: 5 }}>
+    //         <Button active={size === "small"} text={optionLabels[0]} onClick={handleSmall} />
+    //         <Button active={size === "regular"} text={optionLabels[1]} onClick={handleRegular} />
+    //         <Button active={size === "large"} text={optionLabels[2]} onClick={handleLarge} />
+    //     </ButtonGroup>
+    // </Label>
 
     return (
         <div>

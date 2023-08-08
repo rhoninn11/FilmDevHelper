@@ -1,18 +1,19 @@
 import { Card, Button, H2, Elevation, InputGroup, TextArea, Switch, NumericInput, Icon } from '@blueprintjs/core';
-import { TooltipedButton } from '../tooltiped-button/tooltiped-button';
+import { TooltipedButton } from '../../tooltiped-button/tooltiped-button';
 
 import classNames from 'classnames';
 import styles from './dev-step-editor.module.scss';
 
-import { DevStep } from '../../logic/data-props';
+import { DevStep } from '../../../logic/data-props';
 import { useState } from 'react';
 
-import { inputEditor, textAreaEditor } from '../../logic/editor-helper';
-import { editDBDevStep } from '../../logic/db';
-import { TimePicker } from '../time-picker/time-picker';
-import { DeleteOverlay } from '../higher-level/overlays/delete-overlay/delete-overlay';
-import { MoreOptionsMenu } from '../higher-level/menus/more-options-menu/more-options-menu';
-import { FilmMenuOption } from '../../logic/my-types';
+import { inputEditor, textAreaEditor } from '../../../logic/editor-helper';
+import { editDBDevStep } from '../../../logic/db';
+import { TimePicker } from '../../time-picker/time-picker';
+import { DeleteOverlay } from '../../higher-level/overlays/delete-overlay/delete-overlay';
+import { MoreOptionsMenu } from '../../higher-level/others/more-options-menu/more-options-menu';
+import { FilmMenuOption } from '../../../logic/my-types';
+import { AcceptCancelPrompt } from '../../higher-level/others/accept_cancel_prompt/accept_cancel_prompt';
 
 export interface DevStepEditorProps {
     className?: string;
@@ -79,26 +80,9 @@ export const DevStepEditor = ({
         setHasChanges(false)
     }
 
-    const submitButton = <Button
-        text="Accept"
-        type="button"
-        intent="primary"
-        icon="arrow-right"
-        onClick={submitStepEdit_2_Db}
-    />
-
-    const cancelButton = <Button
-        text="Cancel"
-        type="button"
-        intent="danger"
-        icon="cross"
-        onClick={revertChanges}
-    />
-
-    const buttonArea = <div >
-        {cancelButton}
-        {submitButton}
-    </div>
+    const commit_prompt = <AcceptCancelPrompt
+        onAccept={submitStepEdit_2_Db}
+        onCancel={revertChanges}/>
 
     const minCValue = -40;
     const maxCValue = 40;
@@ -139,7 +123,7 @@ export const DevStepEditor = ({
     }]
 
     const editor = isDeleted ? <div></div>
-        :   <Card className={classNames(styles.fcolumn, styles.card)} elevation={Elevation.TWO} interactive>
+        :   <Card className={classNames(styles.fcolumn)} elevation={Elevation.TWO} interactive>
                 <InputGroup fill round placeholder="Step name" 
                     value={devStepTitle} onChange={(ev) => inputEditor(ev, setDevStepTitle, setHasChanges)}/>
                 <TextArea className={styles.higher}
@@ -155,7 +139,7 @@ export const DevStepEditor = ({
                 {remove_overlay}
                 <MoreOptionsMenu 
                         options={more_option}/>
-                {hasChanges ? buttonArea : null}
+                {hasChanges ? commit_prompt : null}
             </Card>
 
     return editor;

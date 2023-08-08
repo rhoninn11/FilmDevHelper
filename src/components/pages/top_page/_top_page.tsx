@@ -14,6 +14,7 @@ import { FilmCard } from '../../film-card/film-card';
 import { FilmCreator } from '../../film-creator/film-creator';
 import { TooltipedButton } from '../../tooltiped-button/tooltiped-button';
 import { inputEditor } from '../../../logic/editor-helper';
+import { FilmEditor } from '../../editors/film_editor/film_editor';
 
 export interface TopPage {
     className?: string;
@@ -44,18 +45,21 @@ export const TopPage = ({
         fetchData();
     }, []);
 
-    const addItem = async (newFilm: Film) => {
-        newFilm.id = items.length + 1;
+    const getNewId = () => {
+        return items.length + 1;
+    };
 
+    const addItem = async (newFilm: Film) => {
         addDBFilm(newFilm);
         setItems((prevItems) => [...prevItems, newFilm]);
         setShowEditor(false);
     };
 
-    const clearDatabase = async () => {
-        await clearDB();
-        setItems([]);
-    };
+    const film_creator = showEditor ? 
+        <FilmEditor 
+            createData={{id: getNewId(), createHandle: addItem}}
+            onCancel={() => setShowEditor(false)}/>
+        : null;
 
     const downloadDatabase = async () => {
         const blob = await getDBJson();
@@ -125,12 +129,7 @@ export const TopPage = ({
                     value={searchQuery}
                 />
             </Card> : null }
-            {showEditor && (
-                <FilmCreator
-                    onSave={addItem}
-                    onCancel={() => setShowEditor(false)}
-                />
-            )}
+            {film_creator}
             
             {found_items.map((item) => (
                 <FilmCard

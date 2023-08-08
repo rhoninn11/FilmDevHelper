@@ -16,13 +16,21 @@
         gap: 0.2rem;
     }
 
-    &.horizontal {
-        flex-direction: row;
-
-    }
-
     &.wider {
         min-width: 420px;
         width: 200px;
     }
+}
+
+.frow {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.wider_brn {
+    flex-grow: 1;
 }

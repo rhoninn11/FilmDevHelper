@@ -53,7 +53,7 @@ export const TimePicker = ({
                     className={styles.rowi}
                     min={bLimit-1} max={uLimit+1}
                     value={sec} onChange={(ev) => onChange(ev, 's')}/>
-                <span>mm:ss</span>
+                <span>mm : ss</span>
             </div>
         </div>
     );

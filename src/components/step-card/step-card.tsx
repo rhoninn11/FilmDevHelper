@@ -1,4 +1,4 @@
-import { Card, Button, H2, Elevation } from '@blueprintjs/core';
+import { Card, Button, H2, Elevation, Classes } from '@blueprintjs/core';
 import classNames from 'classnames';
 import styles from './step-card.module.scss';
 import { DevStep } from '../../logic/data-props';
@@ -10,6 +10,7 @@ export interface StepCardProps {
     step: DevStep;
     onDevelop?: (firstStep: DevStep) => void;
     onShowNotes?: (step: DevStep) => void;
+    selected?: boolean;
 }
 
 /**
@@ -21,6 +22,7 @@ export const StepCard = ({
     step,
     onDevelop,
     onShowNotes,
+    selected,
 }: StepCardProps) => {
 
     const mOnDevelopHandler = () =>{
@@ -31,8 +33,10 @@ export const StepCard = ({
         if (onShowNotes) onShowNotes(step);
     }
 
+    const highlight = selected ? Classes.ELEVATION_4 : '';
+
     return (
-        <Card className={ classNames(styles.wrapper, styles.card)}>
+        <Card className={ classNames(styles.wrapper, styles.card, highlight)}>
             <H2>{step.title}</H2>
             <p>{step.content}</p>
             <Card className={classNames(styles.wrapper, styles.card)}>
@@ -48,17 +52,21 @@ export const StepCard = ({
                 {step.temp}
                 {'°C'}
             </Card>
-            <Card className={classNames(styles.wrapper, styles.card, styles.horizontal)}>
-                <TooltipedButton
-                    icon={'flow-linear'}
-                    tipText={'Start process'}
-                    onClick={mOnDevelopHandler}
-                />
-                <TooltipedButton 
-                    icon={'annotation'} 
-                    tipText={'Notes'} 
-                    onClick={_on_show_notes}/>
-            </Card>
+            <div className={styles.frow}>   
+                    <Button className={styles.wider_brn}
+                        text="Start development"
+                        type="button"
+                        intent="primary"
+                        icon="flow-linear"
+                        onClick={mOnDevelopHandler}/>
+                    <Button className={styles.wider_brn}
+                        text="Notes"
+                        type="button"
+                        intent="primary"
+                        icon="annotation"
+                        onClick={_on_show_notes}/>
+
+            </div>
         </Card>
     );
 };

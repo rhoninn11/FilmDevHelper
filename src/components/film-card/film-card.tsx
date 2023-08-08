@@ -35,12 +35,12 @@ export const FilmCard = ({
                     className={classNames(styles.btn_wrapper, styles.last_item)}
                 >
                     <TooltipedButton 
-                        tipText='develop card'
+                        tipText='Show development process'
                         icon='build'
                         onClick={() => filmDevelopHandle(film)}
                     />
                     <TooltipedButton 
-                        tipText='edit card'
+                        tipText='Edit film'
                         icon='edit'
                         onClick={() => filmEditHandler(film)}
                     />

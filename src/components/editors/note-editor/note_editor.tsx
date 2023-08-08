@@ -2,15 +2,17 @@ import { Card, Button, Elevation, TextArea, Icon } from '@blueprintjs/core';
 
 import styles from './s.module.scss';
 
-import { DevStep, DevStepNote } from '../../logic/data-props';
+import { DevStep, DevStepNote } from '../../../logic/data-props';
 import { useState } from 'react';
 
-import { textAreaEditor } from '../../logic/editor-helper';
-import { editDBDevStepNote } from '../../logic/db';
-import { MoreOptionsMenu } from "../higher-level/menus/more-options-menu/more-options-menu";
-import { DeleteOverlay } from '../higher-level/overlays/delete-overlay/delete-overlay';
+import { textAreaEditor } from '../../../logic/editor-helper';
+import { editDBDevStepNote } from '../../../logic/db';
+import { MoreOptionsMenu } from '../../higher-level/others/more-options-menu/more-options-menu';
+import { DeleteOverlay } from '../../higher-level/overlays/delete-overlay/delete-overlay';
 
-import { FilmMenuOption } from '../../logic/my-types';
+import { FilmMenuOption } from '../../../logic/my-types';
+import { AcceptCancelPrompt } from '../../higher-level/others/accept_cancel_prompt/accept_cancel_prompt';
+import classNames from 'classnames';
 
 export interface NoteEditorProps {
     className?: string;
@@ -80,6 +82,10 @@ export const NoteEditor = ({
         {submitButton}
     </div>
 
+    const butonArea_v2 = <AcceptCancelPrompt
+        onAccept={submitStepEdit_2_Db}
+        onCancel={revertChanges}/>
+
     const remove_step_hard = async () => {
         let note_to_remove: DevStepNote = {...lastData}
         note_to_remove.deleted = true;
@@ -105,7 +111,7 @@ export const NoteEditor = ({
     }]
 
     const editor = isDeleted ? <div></div>
-        :<Card className={styles.fcolumn} elevation={Elevation.TWO} interactive>
+        :<Card className={classNames(styles.fcolumn, styles.card)} elevation={Elevation.TWO} interactive>
         <TextArea 
             value={noteTest} 
             onChange={(ev) => textAreaEditor(ev, setNoteText, setHasChanges)}
@@ -113,7 +119,7 @@ export const NoteEditor = ({
         {remove_overlay}
         <MoreOptionsMenu 
                 options={more_option}/>
-        {hasChanges ? buttonArea : null}
+        {hasChanges ? butonArea_v2 : null}
     </Card>
 
     return editor;

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Menu, MenuItem, Classes, Intent, MenuItemProps, Popover, Button, PortalProvider, Icon } from "@blueprintjs/core";
 import classNames from "classnames";
 
-import { FilmMenuOption } from "@/logic/my-types";
+import { FilmMenuOption } from "../../../../logic/my-types";
 
 interface MoreOptionsMenuProps {
     options: FilmMenuOption[];

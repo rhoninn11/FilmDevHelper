@@ -1,14 +1,11 @@
-.root {
-    max-width: 350px;
-    min-height: 100%;
-    padding: 2rem;
-    gap: 1rem;
-}
+// globals
+@import '../../../globals/colors.module';
 
 .fcolumn {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    border-radius: 1rem;
 }
 
 .frow {
@@ -26,4 +23,6 @@
     min-width: 100%;
     min-height: 120px;
 }
+
+
 
