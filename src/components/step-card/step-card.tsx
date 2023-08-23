@@ -62,7 +62,7 @@ export const StepCard = ({
                     <Button className={styles.wider_brn}
                         text="Notes"
                         type="button"
-                        intent="primary"
+                        intent={selected ? "success":"primary"}
                         icon="annotation"
                         onClick={_on_show_notes}/>
 

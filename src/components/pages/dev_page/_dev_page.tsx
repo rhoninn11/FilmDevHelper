@@ -131,6 +131,7 @@ export const DevPage = ({
                     onClick={onCancel}
                 />
                 <H2>{film.name}</H2>
+                <p>{film.description}</p>
                 {devSteps.map((step) => (
                     <StepCard 
                         step={step}

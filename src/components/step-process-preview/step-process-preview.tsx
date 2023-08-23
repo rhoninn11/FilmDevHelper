@@ -76,7 +76,7 @@ export const StepProcessPreview = ({
                 <TimeDisplay 
                     time_s={time_left()}/>
                 <ProgressBar 
-                    intent="primary" value={progress} />
+                    intent="danger" value={progress} />
             </div>
         </Card>
     );

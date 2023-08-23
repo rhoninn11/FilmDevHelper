@@ -1,36 +1,32 @@
 
 export enum FilmType {
     COLOR = "Color",
-    MONO = "Mono",
+    MONO = "Monochromatic",
     POSITIVE = "Positive",
 }
 
-export interface Film {
-    id: number;
-    name: string;
-    description: string;
-    deleted: boolean;
-    type: FilmType;
+export class Film {
+    id: number = -1;
+    name: string = '';
+    description: string  = '';
+    deleted: boolean = false;
+    type: FilmType = FilmType.COLOR;
 }
 
-export const empty_film: Film = 
-{
-    id: -1,
-    name: "",
-    description: "",
-    deleted: false,
-    type: FilmType.COLOR,
-} 
+export class DevStep {
+    id: number = -1;
+    filmId: number = -1;
+    title: string = "";
+    content: string = "";
+    timer: boolean = true;
+    timerLength_s: number = 10;
+    deleted: boolean = false;
+    temp: number = 21;
 
-export interface DevStep {
-    id: number;
-    filmId: number;
-    title: string;
-    content: string;
-    timer: boolean;
-    timerLength_s: number;
-    deleted: boolean;
-    temp: number;
+    constructor(id: number, filmId: number) {
+        this.id = id;
+        this.filmId = filmId;
+    }
 }
 
 export const empty_dev_Step: DevStep = {
