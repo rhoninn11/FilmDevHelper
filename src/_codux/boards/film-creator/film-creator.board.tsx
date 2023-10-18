@@ -3,5 +3,5 @@ import { FilmCreator } from '../../../components/film-creator/film-creator';
 
 export default createBoard({
     name: 'FilmCreator',
-    Board: () => <FilmCreator />
+    Board: () => <FilmCreator onSave={() => console.log("onSave")} onCancel={() => console.log("onCancel")} />
 });

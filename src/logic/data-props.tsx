@@ -11,6 +11,7 @@ export class Film {
     description: string  = '';
     deleted: boolean = false;
     type: FilmType = FilmType.COLOR;
+
 }
 
 export class DevStep {
