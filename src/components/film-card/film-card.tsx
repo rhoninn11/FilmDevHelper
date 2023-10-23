@@ -6,6 +6,7 @@ import { Film } from '../../logic/data-props';
 
 import classNames from 'classnames';
 import styles from './film-card.module.scss';
+import { estimate_logo } from '../../globals/variable_logo';
 
 export interface FilmCardProps {
     className?: string;
@@ -26,7 +27,7 @@ export const FilmCard = ({
     return (
         <Card className={classNames(className, styles.wrapper)}>
             <Card elevation={3} className={styles.card}>
-                <img className={styles.logo} src={logo} alt="" />
+                <img className={styles.logo} src={estimate_logo(film.type)} alt="" />
                 <div>
                     <H3 className={styles.title}>{film.name}</H3>
                     <p>{film.description}</p>

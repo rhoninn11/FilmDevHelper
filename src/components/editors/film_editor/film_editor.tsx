@@ -25,8 +25,9 @@ import { AcceptCancelPrompt } from "../../higher-level/others/accept_cancel_prom
 import { DeleteOverlay } from '../../higher-level/overlays/delete-overlay/delete-overlay';
 import { FilmMenuOption } from '../../../logic/my-types';
 
-const logo =
-    'https://static.wixstatic.com/shapes/610b66_1b7705fd82034afaafdedcc636d8079f.svg'; // bp-logo.svg (256x298)
+import { estimate_logo } from '../../../globals/variable_logo';
+
+
 
 interface FilmEditorProps {
     className?: string;
@@ -138,6 +139,8 @@ export const FilmEditor = ({
             options={more_option} />
         : null
 
+
+
     return (
         <Card
             className={classNames(styles.card, styles.wrapper, className)}
@@ -145,7 +148,7 @@ export const FilmEditor = ({
 
             <H1>Film Editor</H1>
 
-            <img className={styles.logo} src={logo} alt="" />
+            <img className={styles.logo} src={estimate_logo(filmType)} alt="" />
             <Label>
                 Film name:
                 <InputGroup value={filmName}

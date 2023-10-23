@@ -1,5 +1,7 @@
 {
-  "name": "foirst-try",
+  "name": "Film_devel_helper",
+  "author": "Adam Grzelak",
+  "description": "Kind of visual database aplication, with timer and note taking capabilities",
   "private": true,
   "version": "1.0.0",
   "main": "main.js",
@@ -7,13 +9,20 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "ele_start": "electron ."
+    "ele_start": "electron-forge start",
+    "ele_package": "electron-forge package",
+    "ele_build": "electron-builder",
+    "ele_make": "electron-forge make",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
     "@blueprintjs/core": "^5.0.1",
     "@blueprintjs/icons": "^5.0.0",
     "@codux-boards/react-blueprint": "^1.0.12",
     "classnames": "^2.3.2",
+    "electron-squirrel-startup": "^1.0.0",
     "idb": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +30,12 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",
